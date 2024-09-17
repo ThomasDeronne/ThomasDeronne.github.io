@@ -13,6 +13,7 @@
             canvas.addEventListener("touchstart", handleStart);
             canvas.addEventListener("touchend", handleEnd);
             canvas.addEventListener("touchcancel", handleCancel);
+            console.log("Initialisation terminée.");
         }
 
         function handleStart(evt) {
@@ -23,10 +24,10 @@
             const touches = evt.changedTouches;
 
             for (let i = 0; i < touches.length; i++) {
-                log(`touchstart: ${i}.`);
+                console.log(`touchstart: ${i}.`);
                 ongoingTouches.push(copyTouch(touches[i]));
                 const color = colorForTouch(touches[i]);
-                log(
+                console.log(
                 `Couleur de cette touche avec l'identifiant ${touches[i].identifier} = ${color}`,
                 );
                 ctx.beginPath();
@@ -47,13 +48,13 @@
                 const idx = ongoingTouchIndexById(touches[i].identifier);
 
                 if (idx >= 0) {
-                log(`progression du point de touche ${idx}`);
-                ctx.beginPath();
-                log(
+                    console.og(`progression du point de touche ${idx}`);
+                    ctx.beginPath();
+                    console.log(
                     `ctx.moveTo( ${ongoingTouches[idx].pageX}, ${ongoingTouches[idx].pageY} );`,
                 );
                 ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
-                log(`ctx.lineTo( ${touches[i].pageX}, ${touches[i].pageY} );`);
+                console.log(`ctx.lineTo( ${touches[i].pageX}, ${touches[i].pageY} );`);
                 ctx.lineTo(touches[i].pageX, touches[i].pageY);
                 ctx.lineWidth = 4;
                 ctx.strokeStyle = color;
@@ -61,7 +62,7 @@
 
                 ongoingTouches.splice(idx, 1, copyTouch(touches[i])); // on met à jour le point de contact
                 } else {
-                log(`impossible de déterminer le point de contact à faire avancer`);
+                    console.log(`impossible de déterminer le point de contact à faire avancer`);
                 }
             }
         }
@@ -69,7 +70,7 @@
         
         function handleEnd(evt) {
             evt.preventDefault();
-            log("touchend");
+            console.log("touchend");
             const el = document.getElementById("canvas");
             const ctx = el.getContext("2d");
             const touches = evt.changedTouches;
@@ -87,14 +88,14 @@
                 ctx.fillRect(touches[i].pageX - 4, touches[i].pageY - 4, 8, 8); // on dessine un carré à la fin
                 ongoingTouches.splice(idx, 1); // on le retire du tableau de suivi
                 } else {
-                log(`impossible de déterminer le point de contact à terminer`);
+                    console.log(`impossible de déterminer le point de contact à terminer`);
                 }
             }
         }
 
         function handleCancel(evt) {
             evt.preventDefault();
-            log("touchcancel.");
+            console.log("touchcancel.");
             const touches = evt.changedTouches;
 
             for (let i = 0; i < touches.length; i++) {

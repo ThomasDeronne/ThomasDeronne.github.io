@@ -4,6 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exercice 3</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        h2 {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            margin: 0;
+        }
+        p {
+            padding: 10px;
+            background-color: #f4f4f4;
+            border-bottom: 1px solid #ccc;
+        }
+    </style>
     <script>
         function orientation(pos) {
             let crd = pos.coords;
@@ -35,6 +54,9 @@
     </script>
 </head>
 <body>
+    <!--Button pour activer la géolocalisation-->
+    <button onclick="navigator.geolocation.getCurrentPosition(orientation);">Activer la géolocalisation</button>
+
     <h2>Orientation</h2>
     <p id="alpha">Alpha : </p>
     <p id="beta">Beta : </p>
