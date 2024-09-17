@@ -35,7 +35,7 @@
         }
     </style>
     <script>
-        function orientation(pos) {
+        function handleOrientationAndMovement(pos) {
             let crd = pos.coords;
             let alpha = crd.alpha;
             let beta = crd.beta;
@@ -44,9 +44,7 @@
             document.getElementById('alpha').innerHTML = 'Alpha : ' + alpha;
             document.getElementById('beta').innerHTML = 'Beta : ' + beta;
             document.getElementById('gamma').innerHTML = 'Gamma : ' + gamma;
-        }
 
-        function mouvement(pos) {
             let acc = pos.accelerationIncludingGravity;
             let rotation = pos.rotationRate;
 
@@ -59,29 +57,20 @@
             document.getElementById('rotationGamma').innerHTML = 'Rotation Gamma : ' + rotation.gamma;
         }
 
-        document.getElementById('startOrientation').addEventListener('click', function() {
-            if (window.DeviceOrientationEvent) {
-                window.addEventListener('deviceorientation', orientation);
+        function startOrientationAndMovement() {
+            if (window.DeviceOrientationEvent && window.DeviceMotionEvent) {
+                window.addEventListener('deviceorientation', handleOrientationAndMovement);
+                window.addEventListener('devicemotion', handleOrientationAndMovement);
             } else {
-                alert("L'orientation n'est pas supportée par votre appareil.");
+                alert("L'orientation et le mouvement ne sont pas supportés par votre appareil.");
             }
-        });
-
-        document.getElementById('startMouvement').addEventListener('click', function() {
-            if (window.DeviceMotionEvent) {
-                window.addEventListener('devicemotion', mouvement);
-            } else {
-                alert("Le mouvement n'est pas supporté par votre appareil.");
-            }
-        });
+        }   
 
     </script>
 </head>
 <body>
-    <!--Button pour activer l'orientation-->
-    <button id="startOrientation">Activer l'orientation</button>
-    <!--Button pour activer le mouvement-->
-    <button id="startMouvement">Activer le mouvement</button>
+    <!--Button pour activer l'orientation et le mouvement-->
+    <button id="startOrientation" onclick="startOrientationAndMovement()">Activer l'orientation et le mouvement</button>
 
     <h2>Orientation</h2>
     <p id="alpha">Alpha : </p>
