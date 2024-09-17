@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>exo 4</title>
+    <script>
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+
+        canvas.addEventListener("touchstart", function(event) {
+            var touch = event.touches[0];
+            var x = touch.clientX;
+            var y = touch.clientY;
+            var eventType = event.type;
+            drawCircle(x, y);
+            displayEventInfo(x, y, eventType);
+        });
+
+        canvas.addEventListener("touchmove", function(event) {
+            event.preventDefault();
+            var touch = event.touches[0];
+            var x = touch.clientX;
+            var y = touch.clientY;
+            var eventType = event.type;
+            drawCircle(x, y);
+            displayEventInfo(x, y, eventType);
+        });
+
+        canvas.addEventListener("touchend", function(event) {
+            var touch = event.changedTouches[0];
+            var x = touch.clientX;
+            var y = touch.clientY;
+            var eventType = event.type;
+            drawCircle(x, y);
+            displayEventInfo(x, y, eventType);
+        });
+
+        function drawCircle(x, y) {
+            ctx.beginPath();
+            ctx.arc(x, y, 10, 0, 2 * Math.PI);
+            ctx.fillStyle = "red";
+            ctx.fill();
+        }
+
+        function displayEventInfo(x, y, eventType) {
+            var info = "Position: (" + x + ", " + y + ")<br>";
+            info += "Event Type: " + eventType;
+            document.getElementById("event-info").innerHTML = info;
+        }
+    </script>
+</head>
+<body>
+    <h2>Touch Event</h2>
+    <canvas id="canvas" width="400" height="400"></canvas>    
+</body>
+</html>
