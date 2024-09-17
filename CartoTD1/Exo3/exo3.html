@@ -34,6 +34,23 @@
             cursor: pointer;
         }
     </style>
+</head>
+<body>
+    <button id="requestPermission" onclick="requestOrientationPermission()">Demander la permission</button>
+
+    <h2>Orientation</h2>
+    <p id="alpha">Alpha : </p>
+    <p id="beta">Beta : </p>
+    <p id="gamma">Gamma : </p>
+
+    <h2>Mouvement</h2>
+    <p id="accX">Accélération X : </p>
+    <p id="accY">Accélération Y : </p>
+    <p id="accZ">Accélération Z : </p>
+    <p id="rotationAlpha">Rotation Alpha : </p>
+    <p id="rotationBeta">Rotation Beta : </p>
+    <p id="rotationGamma">Rotation Gamma : </p>
+
     <script>
         function handleOrientationAndMovement(pos) {
             let crd = pos.coords;
@@ -57,32 +74,24 @@
             document.getElementById('rotationGamma').innerHTML = 'Rotation Gamma : ' + rotation.gamma;
         }
 
-        function startOrientationAndMovement() {
-            if (window.DeviceOrientationEvent && window.DeviceMotionEvent) {
-                window.addEventListener('deviceorientation', handleOrientationAndMovement);
-                window.addEventListener('devicemotion', handleOrientationAndMovement);
+        function requestOrientationPermission() {
+            if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceMotionEvent !== 'undefined') {
+                DeviceOrientationEvent.requestPermission()
+                    .then(function(permissionState) {
+                        if (permissionState === 'granted') {
+                            window.addEventListener('deviceorientation', handleOrientationAndMovement);
+                            window.addEventListener('devicemotion', handleOrientationAndMovement);
+                        } else {
+                            alert("Permission refusée pour l'accès à l'orientation et au mouvement.");
+                        }
+                    })
+                    .catch(function(error) {
+                        alert("Erreur lors de la demande de permission : " + error);
+                    });
             } else {
                 alert("L'orientation et le mouvement ne sont pas supportés par votre appareil.");
             }
-        }   
-
+        }
     </script>
-</head>
-<body>
-    <!--Button pour activer l'orientation et le mouvement-->
-    <button id="startOrientation" onclick="startOrientationAndMovement()">Activer l'orientation et le mouvement</button>
-
-    <h2>Orientation</h2>
-    <p id="alpha">Alpha : </p>
-    <p id="beta">Beta : </p>
-    <p id="gamma">Gamma : </p>
-
-    <h2>Mouvement</h2>
-    <p id="accX">Accélération X : </p>
-    <p id="accY">Accélération Y : </p>
-    <p id="accZ">Accélération Z : </p>
-    <p id="rotationAlpha">Rotation Alpha : </p>
-    <p id="rotationBeta">Rotation Beta : </p>
-    <p id="rotationGamma">Rotation Gamma : </p>
 </body>
 </html>
