@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exercice 3</title>
+    <title>Orientation et Mouvement du Smartphone</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,13 +11,13 @@
             padding: 0;
             background-color: #f4f4f4;
         }
-        h2 {
+        h1 {
             background-color: #333;
             color: #fff;
             padding: 10px;
             margin: 0;
         }
-        p {
+        .data {
             padding: 10px;
             background-color: #f4f4f4;
             border-bottom: 1px solid #ccc;
@@ -25,73 +25,50 @@
         span {
             color: #333;
         }
-        button {
-            padding: 10px;
-            margin: 10px;
-            background-color: #333;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
-    <button id="requestPermission" onclick="requestOrientationPermission()">Demander la permission</button>
 
-    <h2>Orientation</h2>
-    <p id="alpha">Alpha : </p>
-    <p id="beta">Beta : </p>
-    <p id="gamma">Gamma : </p>
+    <h1>Orientation et Mouvement du Smartphone</h1>
 
-    <h2>Mouvement</h2>
-    <p id="accX">Accélération X : </p>
-    <p id="accY">Accélération Y : </p>
-    <p id="accZ">Accélération Z : </p>
-    <p id="rotationAlpha">Rotation Alpha : </p>
-    <p id="rotationBeta">Rotation Beta : </p>
-    <p id="rotationGamma">Rotation Gamma : </p>
+    <div class="data" id="orientation">
+        <h2>Orientation du smartphone</h2>
+        <p>Alpha (z-axis rotation): <span id="alpha">0</span>°</p>
+        <p>Beta (x-axis rotation): <span id="beta">0</span>°</p>
+        <p>Gamma (y-axis rotation): <span id="gamma">0</span>°</p>
+    </div>
+
+    <div class="data" id="motion">
+        <h2>Mouvement du smartphone</h2>
+        <p>Accélération X: <span id="accel-x">0</span> m/s²</p>
+        <p>Accélération Y: <span id="accel-y">0</span> m/s²</p>
+        <p>Accélération Z: <span id="accel-z">0</span> m/s²</p>
+        <p>Accélération en rotation Alpha: <span id="rotation-alpha">0</span> rad/s</p>
+        <p>Accélération en rotation Beta: <span id="rotation-beta">0</span> rad/s</p>
+        <p>Accélération en rotation Gamma: <span id="rotation-gamma">0</span> rad/s</p>
+    </div>
 
     <script>
-        function handleOrientationAndMovement(pos) {
-            let crd = pos.coords;
-            let alpha = crd.alpha;
-            let beta = crd.beta;
-            let gamma = crd.gamma;
+        // Gestionnaire pour DeviceOrientation
+        window.addEventListener('deviceorientation', function(event) {
+            document.getElementById('alpha').textContent = event.alpha.toFixed(2);
+            document.getElementById('beta').textContent = event.beta.toFixed(2);
+            document.getElementById('gamma').textContent = event.gamma.toFixed(2);
+        });
 
-            document.getElementById('alpha').innerHTML = 'Alpha : ' + alpha;
-            document.getElementById('beta').innerHTML = 'Beta : ' + beta;
-            document.getElementById('gamma').innerHTML = 'Gamma : ' + gamma;
+        // Gestionnaire pour DeviceMotion
+        window.addEventListener('devicemotion', function(event) {
+            // Accélération linéaire (translation)
+            document.getElementById('accel-x').textContent = event.acceleration.x ? event.acceleration.x.toFixed(2) : '0';
+            document.getElementById('accel-y').textContent = event.acceleration.y ? event.acceleration.y.toFixed(2) : '0';
+            document.getElementById('accel-z').textContent = event.acceleration.z ? event.acceleration.z.toFixed(2) : '0';
 
-            let acc = pos.accelerationIncludingGravity;
-            let rotation = pos.rotationRate;
-
-            document.getElementById('accX').innerHTML = 'Accélération X : ' + acc.x;
-            document.getElementById('accY').innerHTML = 'Accélération Y : ' + acc.y;
-            document.getElementById('accZ').innerHTML = 'Accélération Z : ' + acc.z;
-
-            document.getElementById('rotationAlpha').innerHTML = 'Rotation Alpha : ' + rotation.alpha;
-            document.getElementById('rotationBeta').innerHTML = 'Rotation Beta : ' + rotation.beta;
-            document.getElementById('rotationGamma').innerHTML = 'Rotation Gamma : ' + rotation.gamma;
-        }
-
-        function requestOrientationPermission() {
-            if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceMotionEvent !== 'undefined') {
-                DeviceOrientationEvent.requestPermission()
-                    .then(function(permissionState) {
-                        if (permissionState === 'granted') {
-                            window.addEventListener('deviceorientation', handleOrientationAndMovement);
-                            window.addEventListener('devicemotion', handleOrientationAndMovement);
-                        } else {
-                            alert("Permission refusée pour l'accès à l'orientation et au mouvement.");
-                        }
-                    })
-                    .catch(function(error) {
-                        alert("Erreur lors de la demande de permission : " + error);
-                    });
-            } else {
-                alert("L'orientation et le mouvement ne sont pas supportés par votre appareil.");
-            }
-        }
+            // Accélération rotationnelle (rotation)
+            document.getElementById('rotation-alpha').textContent = event.rotationRate.alpha ? event.rotationRate.alpha.toFixed(2) : '0';
+            document.getElementById('rotation-beta').textContent = event.rotationRate.beta ? event.rotationRate.beta.toFixed(2) : '0';
+            document.getElementById('rotation-gamma').textContent = event.rotationRate.gamma ? event.rotationRate.gamma.toFixed(2) : '0';
+        });
     </script>
+
 </body>
 </html>
