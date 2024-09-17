@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>exo 3</title>
+    <title>Exercice 3</title>
     <script>
         function orientation(pos) {
             let crd = pos.coords;
@@ -11,20 +11,41 @@
             let beta = crd.beta;
             let gamma = crd.gamma;
 
-            document.getElementById('alpha').innerHTML= 'Alpha : ' + alpha;
-            document.getElementById('beta').innerHTML= 'Beta : ' + beta;
-            document.getElementById('gamma').innerHTML= 'Gamma : ' + gamma;
+            document.getElementById('alpha').innerHTML = 'Alpha : ' + alpha;
+            document.getElementById('beta').innerHTML = 'Beta : ' + beta;
+            document.getElementById('gamma').innerHTML = 'Gamma : ' + gamma;
         }
 
         window.addEventListener('deviceorientation', orientation);
+
+        function mouvement(pos) {
+            let acc = pos.accelerationIncludingGravity;
+            let rotation = pos.rotationRate;
+
+            document.getElementById('accX').innerHTML = 'Accélération X : ' + acc.x;
+            document.getElementById('accY').innerHTML = 'Accélération Y : ' + acc.y;
+            document.getElementById('accZ').innerHTML = 'Accélération Z : ' + acc.z;
+
+            document.getElementById('rotationAlpha').innerHTML = 'Rotation Alpha : ' + rotation.alpha;
+            document.getElementById('rotationBeta').innerHTML = 'Rotation Beta : ' + rotation.beta;
+            document.getElementById('rotationGamma').innerHTML = 'Rotation Gamma : ' + rotation.gamma;
+        }
+
+        window.addEventListener('devicemotion', mouvement);
     </script>
 </head>
 <body>
-    <h2>orientation</h2>
-    <p id="alpha">Alpha: </span></p>
-    <p id="beta">Beta: </span></p>
-    <p id="gamma">Gamma: </span></p>
+    <h2>Orientation</h2>
+    <p id="alpha">Alpha : </p>
+    <p id="beta">Beta : </p>
+    <p id="gamma">Gamma : </p>
 
-    <h2>mouvement</h2>
+    <h2>Mouvement</h2>
+    <p id="accX">Accélération X : </p>
+    <p id="accY">Accélération Y : </p>
+    <p id="accZ">Accélération Z : </p>
+    <p id="rotationAlpha">Rotation Alpha : </p>
+    <p id="rotationBeta">Rotation Beta : </p>
+    <p id="rotationGamma">Rotation Gamma : </p>
 </body>
 </html>
