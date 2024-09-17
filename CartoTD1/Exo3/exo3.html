@@ -46,8 +46,6 @@
             document.getElementById('gamma').innerHTML = 'Gamma : ' + gamma;
         }
 
-        window.addEventListener('deviceorientation', orientation);
-
         function mouvement(pos) {
             let acc = pos.accelerationIncludingGravity;
             let rotation = pos.rotationRate;
@@ -61,14 +59,29 @@
             document.getElementById('rotationGamma').innerHTML = 'Rotation Gamma : ' + rotation.gamma;
         }
 
-        window.addEventListener('devicemotion', mouvement);
+        document.getElementById('startOrientation').addEventListener('click', function() {
+            if (window.DeviceOrientationEvent) {
+                window.addEventListener('deviceorientation', orientation);
+            } else {
+                alert("L'orientation n'est pas supportée par votre appareil.");
+            }
+        });
+
+        document.getElementById('startMouvement').addEventListener('click', function() {
+            if (window.DeviceMotionEvent) {
+                window.addEventListener('devicemotion', mouvement);
+            } else {
+                alert("Le mouvement n'est pas supporté par votre appareil.");
+            }
+        });
+
     </script>
 </head>
 <body>
     <!--Button pour activer l'orientation-->
-    <button onclick="window.addEventListener('deviceorientation', orientation);">Activer l'orientation</button>
+    <button id="startOrientation">Activer l'orientation</button>
     <!--Button pour activer le mouvement-->
-    <button onclick="window.addEventListener('devicemotion', mouvement);">Activer le mouvement</button>
+    <button id="startMouvement">Activer le mouvement</button>
 
     <h2>Orientation</h2>
     <p id="alpha">Alpha : </p>
