@@ -13,12 +13,14 @@
             let altitude = crd.altitude;
             let accuracy = crd.accuracy;
             let speed = crd.speed;
+            let timestamp = pos.timestamp;
             
             document.getElementById('latitude').innerHTML= 'Latitude : ' + latitude;
             document.getElementById('longitude').innerHTML= 'Longitude : ' + longitude;
             document.getElementById('altitude').innerHTML= 'Altitude : ' + altitude;
             document.getElementById('accuracy').innerHTML= 'Précision : ' + accuracy;
             document.getElementById('speed').innerHTML= 'Vitesse : ' + speed;
+            document.getElementById('timestamp').innerHTML= 'Timestamp : ' + timestamp;
         }
 
         navigator.geolocation.getCurrentPosition(coordonnees);
@@ -31,5 +33,6 @@
     <p id="altitude">altitude: </span></p>
     <p id="accuracy">Précision: </span></p>
     <p id="speed">Vitesse: </span></p>
+    <p id="timestamp">Timestamp: </span></p>
 </body>
 </html>
