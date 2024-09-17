@@ -121,6 +121,12 @@
             return -1; 
         }
 
+        function clearCanvas() {
+            const el = document.getElementById("canvas");
+            const ctx = el.getContext("2d");
+            ctx.clearRect(0, 0, el.width, el.height);
+        }
+
         function log(msg) {
             console.log(msg);
         }
@@ -130,6 +136,7 @@
 </head>
 <body>
     <h2>Touch Event</h2>
+    <button onclick="clearCanvas()">Effacer</button>
     <canvas id="canvas" width="600" height="600" style="border:solid black 1px;"></canvas>
 </body>
 </html>
