@@ -4,6 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>exo 4</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        h2 {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            margin: 0;
+        }
+        button {
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
     <script>
         const ongoingTouches = [];
 
@@ -135,8 +159,10 @@
     </script>
 </head>
 <body>
-    <h2>Touch Event</h2>
-    <button onclick="clearCanvas()">Effacer</button>
+    <div>
+        <h2>Touch Event</h2>
+        <button onclick="clearCanvas()">Effacer</button>
+    </div>
     <canvas id="canvas" width="600" height="600" style="border:solid black 1px;"></canvas>
 </body>
 </html>
