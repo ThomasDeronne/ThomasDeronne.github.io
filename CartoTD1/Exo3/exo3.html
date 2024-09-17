@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orientation et Mouvement du Smartphone</title>
+    <title>Orientation et Mouvement</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -29,17 +29,17 @@
 </head>
 <body>
 
-    <h1>Orientation et Mouvement du Smartphone</h1>
+    <h1>Orientation et Mouvement</h1>
 
     <div class="data" id="orientation">
-        <h2>Orientation du smartphone</h2>
+        <h2>Orientation</h2>
         <p>Alpha (z-axis rotation): <span id="alpha">0</span>°</p>
         <p>Beta (x-axis rotation): <span id="beta">0</span>°</p>
         <p>Gamma (y-axis rotation): <span id="gamma">0</span>°</p>
     </div>
 
     <div class="data" id="motion">
-        <h2>Mouvement du smartphone</h2>
+        <h2>Mouvement</h2>
         <p>Accélération X: <span id="accel-x">0</span> m/s²</p>
         <p>Accélération Y: <span id="accel-y">0</span> m/s²</p>
         <p>Accélération Z: <span id="accel-z">0</span> m/s²</p>
@@ -47,7 +47,6 @@
         <p>Accélération en rotation Beta: <span id="rotation-beta">0</span> rad/s</p>
         <p>Accélération en rotation Gamma: <span id="rotation-gamma">0</span> rad/s</p>
     </div>
-
     <script>
         // Gestionnaire pour DeviceOrientation
         window.addEventListener('deviceorientation', function(event) {
@@ -69,6 +68,5 @@
             document.getElementById('rotation-gamma').textContent = event.rotationRate.gamma ? event.rotationRate.gamma.toFixed(2) : '0';
         });
     </script>
-
 </body>
 </html>

@@ -10,7 +10,7 @@
         function startup() {
             const canvas = document.getElementById("canvas");
             canvas.addEventListener("touchstart", handleStart);
-            canvas.addEventListener("touchmove", handleMove); // Ajout de l'événement touchmove
+            canvas.addEventListener("touchmove", handleMove)
             canvas.addEventListener("touchend", handleEnd);
             canvas.addEventListener("touchcancel", handleCancel);
             console.log("Initialisation terminée.");
@@ -29,7 +29,7 @@
                 const color = colorForTouch(touches[i]);
                 console.log(`Couleur de cette touche avec l'identifiant ${touches[i].identifier} = ${color}`);
                 ctx.beginPath();
-                ctx.arc(touches[i].pageX, touches[i].pageY, 4, 0, 2 * Math.PI, false); // un cercle au début
+                ctx.arc(touches[i].pageX, touches[i].pageY, 4, 0, 2 * Math.PI, false);
                 ctx.fillStyle = color;
                 ctx.fill();
             }
@@ -56,7 +56,7 @@
                     ctx.strokeStyle = color;
                     ctx.stroke();
 
-                    ongoingTouches.splice(idx, 1, copyTouch(touches[i])); // on met à jour le point de contact
+                    ongoingTouches.splice(idx, 1, copyTouch(touches[i]));
                 } else {
                     console.log(`impossible de déterminer le point de contact à faire avancer`);
                 }
