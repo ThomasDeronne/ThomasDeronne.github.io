@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exo 2</title>
+    <!-- leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+    <!-- style map -->
+    <style>
+        #map {
+            height: 650px;
+        }
+    </style>
+    <!-- script -->
+     <script>
+        function affichageMap(pos) {
+            let crd = pos.coords;
+
+            let latitudeactu = crd.latitude;
+            let longitudeactu = crd.longitude;
+
+            let latitude1 = 32.321375;
+            let longitude1 = -64.75737;
+
+            let latitude2 = 25.774265;
+            let longitude2 = -80.193658;
+
+            let latitude3 = 18.466333;
+            let longitude3 = -66.105721;
+
+            let latitudeMarseille = 43.296482;
+            let longitudeMarseille = 5.36978;
+
+            let latitudeNice = 43.700000;
+            let longitudeNice = 7.250000;
+
+            var formuleMarseilleNice = Math.sqrt(Math.pow((latitudeMarseille - latitudeNice), 2) + Math.pow((longitudeMarseille - longitudeNice), 2));
+
+            let map = L.map('map').setView([latitude1, longitude1], 5);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                // ma map mapstamen ne marche pas : https://maps.stamen.com/terrain/{z}/{x}/{y}.jpg
+                maxZoom: 19,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }).addTo(map);
+
+            var polygon = L.polygon([
+                [latitude1, longitude1],
+                [latitude2, longitude2],
+                [latitude3, longitude3]
+            ]).addTo(map);
+            polygon.bindPopup('Triangle des Bermudes');
+
+            var circle = L.circle([latitudeactu, longitudeactu], {
+                color: 'red',
+                fillColor: '#f03',
+                fillOpacity: 0.5,
+                radius: crd.accuracy
+            }).addTo(map);
+            circle.bindPopup('Vous êtes ici');
+
+            L.marker([latitudeMarseille, longitudeMarseille]).addTo(map)
+                .bindPopup('Marseille')
+                .openPopup();
+            
+            var distanceMarseilleNice = L.polygon([
+                [latitudeMarseille, longitudeMarseille],
+                [latitudeactu, longitudeactu]
+            ]).addTo(map);
+            distanceMarseilleNice.bindPopup('Distance Marseille-Nice : ' + formuleMarseilleNice + '°');
+
+        }
+        navigator.geolocation.getCurrentPosition(affichageMap);
+     </script>
+</head>
+<body>
+    <div id="map"></div>
+</body>
+</html>

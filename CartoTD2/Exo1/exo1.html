@@ -17,9 +17,9 @@
             height: 350px;
         }
     </style>
-    <!-- récupération coordonnées -->
+    <!-- script -->
     <script>
-        function coordonnees(pos) {
+        function affichageMap(pos) {
             let crd = pos.coords;
 
             let latitude = crd.latitude;
@@ -36,6 +36,7 @@
             L.marker([latitude, longitude]).addTo(map)
                 .bindPopup('Vous êtes ici')
                 .openPopup();
+
             L.marker([latitudeNice, longitudeNice]).addTo(map)
                 .bindPopup('Nice')
                 .openPopup();
@@ -43,7 +44,7 @@
             document.getElementById('latitude').innerHTML= 'Latitude : ' + latitude;
             document.getElementById('longitude').innerHTML= 'Longitude : ' + longitude;
         }
-        navigator.geolocation.getCurrentPosition(coordonnees);
+        navigator.geolocation.getCurrentPosition(affichageMap);
     </script>
 </head>
 <body>
