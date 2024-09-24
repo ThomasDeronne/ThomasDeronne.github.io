@@ -19,6 +19,18 @@
     </style>
     <!-- script -->
      <script>
+        function calcDistance(lat1, lon1, lat2, lon2) {
+            var R = 6371; // rayon de la Terre en km
+            var dLat = (lat2 - lat1) * Math.PI / 180;
+            var dLon = (lon2 - lon1) * Math.PI / 180;
+            var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                    Math.sin(dLon/2) * Math.sin(dLon/2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            var distance = R * c;
+            return distance.toFixed(2); // distance arrondie à deux décimales
+        }
+
         function affichageMap(pos) {
             let crd = pos.coords;
 
@@ -40,7 +52,7 @@
             let latitudeNice = 43.700000;
             let longitudeNice = 7.250000;
 
-            var formuleMarseilleNice = Math.sqrt(Math.pow((latitudeMarseille - latitudeNice), 2) + Math.pow((longitudeMarseille - longitudeNice), 2));
+            var distanceMarseilleNice = calcDistance(latitudeMarseille, longitudeMarseille, latitudeNice, longitudeNice);
 
             let map = L.map('map').setView([latitude1, longitude1], 5);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -68,11 +80,11 @@
                 .bindPopup('Marseille')
                 .openPopup();
             
-            var distanceMarseilleNice = L.polygon([
+            var distanceMarseilleNicePolygon = L.polygon([
                 [latitudeMarseille, longitudeMarseille],
-                [latitudeactu, longitudeactu]
+                [latitudeNice, longitudeNice]
             ]).addTo(map);
-            distanceMarseilleNice.bindPopup('Distance Marseille-Nice : ' + formuleMarseilleNice + '°');
+            distanceMarseilleNicePolygon.bindPopup('Distance Marseille-Nice : ' + distanceMarseilleNice + ' km');
 
         }
         navigator.geolocation.getCurrentPosition(affichageMap);
