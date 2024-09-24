@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orientation et Mouvement</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            margin: 0;
+        }
+        .data {
+            padding: 10px;
+            background-color: #f4f4f4;
+            border-bottom: 1px solid #ccc;
+        }
+        span {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Orientation et Mouvement</h1>
+
+    <div class="data" id="orientation">
+        <h2>Orientation</h2>
+        <p>Alpha (z-axis rotation): <span id="alpha">0</span>°</p>
+        <p>Beta (x-axis rotation): <span id="beta">0</span>°</p>
+        <p>Gamma (y-axis rotation): <span id="gamma">0</span>°</p>
+    </div>
+
+    <div class="data" id="motion">
+        <h2>Mouvement</h2>
+        <p>Accélération X: <span id="accel-x">0</span> m/s²</p>
+        <p>Accélération Y: <span id="accel-y">0</span> m/s²</p>
+        <p>Accélération Z: <span id="accel-z">0</span> m/s²</p>
+        <p>Accélération en rotation Alpha: <span id="rotation-alpha">0</span> rad/s</p>
+        <p>Accélération en rotation Beta: <span id="rotation-beta">0</span> rad/s</p>
+        <p>Accélération en rotation Gamma: <span id="rotation-gamma">0</span> rad/s</p>
+    </div>
+    <script>
+        // Gestionnaire pour DeviceOrientation
+        window.addEventListener('deviceorientation', function(event) {
+            document.getElementById('alpha').textContent = event.alpha.toFixed(2);
+            document.getElementById('beta').textContent = event.beta.toFixed(2);
+            document.getElementById('gamma').textContent = event.gamma.toFixed(2);
+        });
+
+        // Gestionnaire pour DeviceMotion
+        window.addEventListener('devicemotion', function(event) {
+            // Accélération linéaire (translation)
+            document.getElementById('accel-x').textContent = event.acceleration.x ? event.acceleration.x.toFixed(2) : '0';
+            document.getElementById('accel-y').textContent = event.acceleration.y ? event.acceleration.y.toFixed(2) : '0';
+            document.getElementById('accel-z').textContent = event.acceleration.z ? event.acceleration.z.toFixed(2) : '0';
+
+            // Accélération rotationnelle (rotation)
+            document.getElementById('rotation-alpha').textContent = event.rotationRate.alpha ? event.rotationRate.alpha.toFixed(2) : '0';
+            document.getElementById('rotation-beta').textContent = event.rotationRate.beta ? event.rotationRate.beta.toFixed(2) : '0';
+            document.getElementById('rotation-gamma').textContent = event.rotationRate.gamma ? event.rotationRate.gamma.toFixed(2) : '0';
+        });
+    </script>
+</body>
+</html>

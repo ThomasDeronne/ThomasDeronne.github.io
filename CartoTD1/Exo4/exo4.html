@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>exo 4</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        h2 {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            margin: 0;
+        }
+        button {
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+    <script>
+        const ongoingTouches = [];
+
+        function startup() {
+            const canvas = document.getElementById("canvas");
+            canvas.addEventListener("touchstart", handleStart);
+            canvas.addEventListener("touchmove", handleMove)
+            canvas.addEventListener("touchend", handleEnd);
+            canvas.addEventListener("touchcancel", handleCancel);
+            console.log("Initialisation terminée.");
+        }
+
+        function handleStart(evt) {
+            evt.preventDefault();
+            log("touchstart.");
+            const el = document.getElementById("canvas");
+            const ctx = el.getContext("2d");
+            const touches = evt.changedTouches;
+
+            for (let i = 0; i < touches.length; i++) {
+                console.log(`touchstart: ${i}.`);
+                ongoingTouches.push(copyTouch(touches[i]));
+                const color = colorForTouch(touches[i]);
+                console.log(`Couleur de cette touche avec l'identifiant ${touches[i].identifier} = ${color}`);
+                ctx.beginPath();
+                ctx.arc(touches[i].pageX, touches[i].pageY, 4, 0, 2 * Math.PI, false);
+                ctx.fillStyle = color;
+                ctx.fill();
+            }
+        }
+
+        function handleMove(evt) {
+            evt.preventDefault();
+            const el = document.getElementById("canvas");
+            const ctx = el.getContext("2d");
+            const touches = evt.changedTouches;
+
+            for (let i = 0; i < touches.length; i++) {
+                const color = colorForTouch(touches[i]);
+                const idx = ongoingTouchIndexById(touches[i].identifier);
+
+                if (idx >= 0) {
+                    console.log(`progression du point de touche ${idx}`);
+                    ctx.beginPath();
+                    console.log(`ctx.moveTo( ${ongoingTouches[idx].pageX}, ${ongoingTouches[idx].pageY} );`);
+                    ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
+                    console.log(`ctx.lineTo( ${touches[i].pageX}, ${touches[i].pageY} );`);
+                    ctx.lineTo(touches[i].pageX, touches[i].pageY);
+                    ctx.lineWidth = 4;
+                    ctx.strokeStyle = color;
+                    ctx.stroke();
+
+                    ongoingTouches.splice(idx, 1, copyTouch(touches[i]));
+                } else {
+                    console.log(`impossible de déterminer le point de contact à faire avancer`);
+                }
+            }
+        }
+
+        function handleEnd(evt) {
+            evt.preventDefault();
+            console.log("touchend");
+            const el = document.getElementById("canvas");
+            const ctx = el.getContext("2d");
+            const touches = evt.changedTouches;
+
+            for (let i = 0; i < touches.length; i++) {
+                const color = colorForTouch(touches[i]);
+                let idx = ongoingTouchIndexById(touches[i].identifier);
+
+                if (idx >= 0) {
+                    ctx.lineWidth = 4;
+                    ctx.fillStyle = color;
+                    ctx.beginPath();
+                    ctx.moveTo(ongoingTouches[idx].pageX, ongoingTouches[idx].pageY);
+                    ctx.lineTo(touches[i].pageX, touches[i].pageY);
+                    ctx.fillRect(touches[i].pageX - 4, touches[i].pageY - 4, 8, 8); // on dessine un carré à la fin
+                    ongoingTouches.splice(idx, 1); // on le retire du tableau de suivi
+                } else {
+                    console.log(`impossible de déterminer le point de contact à terminer`);
+                }
+            }
+        }
+
+        function handleCancel(evt) {
+            evt.preventDefault();
+            console.log("touchcancel.");
+            const touches = evt.changedTouches;
+
+            for (let i = 0; i < touches.length; i++) {
+                let idx = ongoingTouchIndexById(touches[i].identifier);
+                ongoingTouches.splice(idx, 1); 
+            }
+        }
+
+        function copyTouch(touch) {
+            return { identifier: touch.identifier, pageX: touch.pageX, pageY: touch.pageY };
+        }
+
+        function colorForTouch(touch) {
+            const r = (touch.identifier % 16) * 16;
+            const g = Math.floor(touch.identifier / 3) % 16 * 16;
+            const b = Math.floor(touch.identifier / 7) % 16 * 16;
+            return `rgb(${r},${g},${b})`;
+        }
+
+        function ongoingTouchIndexById(idToFind) {
+            for (let i = 0; i < ongoingTouches.length; i++) {
+                const id = ongoingTouches[i].identifier;
+
+                if (id === idToFind) {
+                    return i;
+                }
+            }
+            return -1; 
+        }
+
+        function clearCanvas() {
+            const el = document.getElementById("canvas");
+            const ctx = el.getContext("2d");
+            ctx.clearRect(0, 0, el.width, el.height);
+        }
+
+        function log(msg) {
+            console.log(msg);
+        }
+
+        document.addEventListener("DOMContentLoaded", startup);
+    </script>
+</head>
+<body>
+    <div>
+        <h2>Touch Event</h2>
+        <button onclick="clearCanvas()">Effacer</button>
+    </div>
+    <canvas id="canvas" width="600" height="600" style="border:solid black 1px;"></canvas>
+</body>
+</html>
