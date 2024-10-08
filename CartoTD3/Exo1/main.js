@@ -45,6 +45,16 @@ const light = new THREE.DirectionalLight(0xdddddd, 0.8);
 light.position.set(0, 10, 0);
 scene.add(light);
 
+// particle system
+const geometry3 = new THREE.SphereGeometry(1, 32, 32);
+const particlesMaterial = new THREE.PointsMaterial({ color: 0x888888});
+particlesMaterial.size = 0.02;
+particlesMaterial.sizeAttenuation = true;
+
+const particleSystem = new THREE.Points(geometry3, particlesMaterial);
+particleSystem.position.y = 2;
+scene.add(particleSystem);
+
 // Événement DeviceOrientation pour la rotation
 window.addEventListener('deviceorientation', (event) => {
     alpha = event.alpha; 
