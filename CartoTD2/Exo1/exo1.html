@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,61 +53,3 @@
     <p id="longitude">Longitude: </span></p>
     <div id="map"></div>
 </body>
-=======
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exo 1</title>
-    <!-- leaflet -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-    crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin=""></script>
-    <!-- style map -->
-    <style>
-        #map {
-            height: 350px;
-        }
-    </style>
-    <!-- script -->
-    <script>
-        function affichageMap(pos) {
-            let crd = pos.coords;
-
-            let latitude = crd.latitude;
-            let longitude = crd.longitude;
-
-            let latitudeNice = 43.700000;
-            let longitudeNice = 7.250000;
-            
-            let map = L.map('map').setView([latitude, longitude], 13);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19,
-                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            }).addTo(map);
-            L.marker([latitude, longitude]).addTo(map)
-                .bindPopup('Vous êtes ici')
-                .openPopup();
-
-            L.marker([latitudeNice, longitudeNice]).addTo(map)
-                .bindPopup('Nice')
-                .openPopup();
-
-            document.getElementById('latitude').innerHTML= 'Latitude : ' + latitude;
-            document.getElementById('longitude').innerHTML= 'Longitude : ' + longitude;
-        }
-        navigator.geolocation.getCurrentPosition(affichageMap);
-    </script>
-</head>
-<body>
-    <h2>Position</h2>
-    <p id="latitude">Latitude: </span></p>
-    <p id="longitude">Longitude: </span></p>
-    <div id="map"></div>
-</body>
->>>>>>> d5a0bf2864a9daf84caed5a843e6982bb6df5b0b
-</html>

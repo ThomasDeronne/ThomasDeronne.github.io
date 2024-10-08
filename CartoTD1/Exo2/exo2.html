@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,65 +57,4 @@
     <p id="speed">Vitesse: </span></p>
     <p id="timestamp">Timestamp: </span></p>
 </body>
-=======
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exo 2</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        h2 {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            margin: 0;
-        }
-        p {
-            padding: 10px;
-            background-color: #f4f4f4;
-            border-bottom: 1px solid #ccc;
-        }
-        span {
-            color: #333;
-        }
-    </style>
-    <script>
-        function coordonnees(pos) {
-            let crd = pos.coords;
-        
-            let latitude = crd.latitude;
-            let longitude = crd.longitude;
-            let altitude = crd.altitude;
-            let accuracy = crd.accuracy;
-            let speed = crd.speed;
-            let timestamp = pos.timestamp;
-            
-            document.getElementById('latitude').innerHTML= 'Latitude : ' + latitude;
-            document.getElementById('longitude').innerHTML= 'Longitude : ' + longitude;
-            document.getElementById('altitude').innerHTML= 'Altitude : ' + altitude;
-            document.getElementById('accuracy').innerHTML= 'Précision : ' + accuracy;
-            document.getElementById('speed').innerHTML= 'Vitesse : ' + speed;
-            document.getElementById('timestamp').innerHTML= 'Timestamp : ' + timestamp;
-        }
-
-        navigator.geolocation.getCurrentPosition(coordonnees);
-    </script>
-</head>
-<body>
-    <h2>Position</h2>
-    <p id="latitude">Latitude: </span></p>
-    <p id="longitude">Longitude: </span></p>
-    <p id="altitude">altitude: </span></p>
-    <p id="accuracy">Précision: </span></p>
-    <p id="speed">Vitesse: </span></p>
-    <p id="timestamp">Timestamp: </span></p>
-</body>
->>>>>>> d5a0bf2864a9daf84caed5a843e6982bb6df5b0b
 </html>
