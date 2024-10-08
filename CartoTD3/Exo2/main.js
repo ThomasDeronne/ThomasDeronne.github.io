@@ -41,6 +41,12 @@ const createScene = function () {
         }
     });
 
+    // système de particules
+    const particleSystem = new BABYLON.ParticleSystem("particles", 2000);
+    particleSystem.particleTexture = new BABYLON.Texture("textures/pngimg.com - star_PNG1592.png");
+    particleSystem.emitter = new BABYLON.Vector3(0, 2.8, 0);
+    particleSystem.start();
+
     return scene;
 };
 
