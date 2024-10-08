@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,4 +42,49 @@
 <body>
     <div id="map"></div>
 </body>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exo 3</title>
+    <!-- leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+    <!-- style map -->
+    <style>
+        #map {
+            height: 650px;
+        }
+    </style>
+    <script>
+        function affichageMap(pos) {
+            let latitude = pos.coords.latitude;
+            let longitude = pos.coords.longitude;
+
+            var map = L.map('map').setView([latitude, longitude], 13);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            fetch('https://france-geojson.gregoiredavid.fr/repo/departements.geojson')
+                .then(response => response.json())
+                .then(data => {
+                    L.geoJSON(data).addTo(map);
+                })
+                .catch(error => console.error('Error loading the GeoJSON data:', error));
+        }
+        navigator.geolocation.getCurrentPosition(affichageMap);
+    </script>
+</head>
+<body>
+    <div id="map"></div>
+</body>
+>>>>>>> d5a0bf2864a9daf84caed5a843e6982bb6df5b0b
 </html>
