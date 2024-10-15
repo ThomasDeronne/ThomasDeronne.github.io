@@ -56,7 +56,6 @@
 
             let map = L.map('map').setView([latitude1, longitude1], 5);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                // ma map mapstamen ne marche pas : https://maps.stamen.com/terrain/{z}/{x}/{y}.jpg
                 maxZoom: 19,
                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             }).addTo(map);
